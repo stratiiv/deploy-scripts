@@ -3,6 +3,7 @@ sudo apt update -y
 sudo apt install -y gnupg curl
 sudo apt install -y git
 sudo apt install -y openjdk-11-jdk
+sudo apt install -y zip unzip
 # install postgres
 sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
