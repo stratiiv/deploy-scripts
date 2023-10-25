@@ -23,3 +23,4 @@ rm -rf /var/lib/tomcat9/webapps/ROOT.war
 cp "$APP_DIR/build/libs/class_schedule.war" "/var/lib/tomcat9/webapps/ROOT.war"
 
 systemctl start tomcat9
+systemctl enable tomcat9

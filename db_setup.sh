@@ -21,7 +21,7 @@ check_error() {
 }
 
 echo "Starting and enabling services..."
-services=("mongod" "redis-server" "tomcat9")
+services=("postgresql" "mongod" "redis-server")
 systemctl daemon-reload
 for service in "${services[@]}"; do
     systemctl start $service
