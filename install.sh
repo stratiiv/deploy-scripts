@@ -2,16 +2,13 @@
 apt update -y
 apt install -y gnupg curl git openjdk-11-jdk zip unzip
 
-# add the PostgreSQL repository and install PostgreSQL
+# install Redis and Tomcat
+apt install -y redis tomcat9
+
+# install PostgreSQL
 sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - # change to gpg
 apt install -y postgresql-14
-
-# install Redis
-apt install -y redis
-
-# install Tomcat 9
-apt install -y tomcat9
 
 # install MongoDB
 curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
