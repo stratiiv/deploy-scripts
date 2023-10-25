@@ -8,6 +8,10 @@ fi
 
 DUMP_PATH="/var/lib/postgresql/dumps"
 
+if [ ! -d "$DUMP_PATH" ]; then
+    mkdir -p "$DUMP_PATH"
+fi
+
 # error handling function
 check_error() {
     if [ $? -ne 0 ]; then
