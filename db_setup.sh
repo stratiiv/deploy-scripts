@@ -6,10 +6,11 @@ else
     exit 1
 fi
 
-DUMP_PATH="/var/lib/postgresql/dumps"
+PG_HOME="/var/lib/postgresql"
+DUMP_PATH="$PG_HOME/dumps"
 
-if [ ! -d "$DUMP_PATH" ]; then
-    mkdir -p "$DUMP_PATH"
+if [ ! -d $DUMP_PATH ]; then
+    mkdir -p $DUMP_PATH
 fi
 
 # error handling function
@@ -29,11 +30,11 @@ for service in "${services[@]}"; do
     check_error "Failed to start and enable $service."
 done
 
-echo "Creating PostgreSQL user, database, and .pgpass file..."
-sudo -u postgres psql -c "CREATE USER $PG_USER WITH PASSWORD '$PG_PASSWORD'"
+echo "Creating PostgreSQL user, databases, and .pgpass file..."
 sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $PG_USER"
+sudo -u postgres psql -c "CREATE DATABASE ${DB_NAME}_test WITH OWNER $PG_USER" # db for tests
 echo "$DB_HOST:$DB_PORT:$DB_NAME:$PG_USER:$PG_PASSWORD" | sudo -u postgres bash -c 'cat > /var/lib/postgresql/.pgpass'
-chmod 0600 /var/lib/postgresql/.pgpass
+chmod 0600 $PG_HOME/.pgpass
 
 echo "Copying dump file..."
 cp "$DUMP_FILE" "$DUMP_PATH/$DUMP_FILE"
