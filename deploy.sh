@@ -1,6 +1,6 @@
 CODE_REPO="https://github.com/stratiiv/java-schedule-app.git"
-APP_DIR="/opt/java-app"
-TOMCAT_PATH="/var/lib/tomcat9"
+APP_DIR=/opt/java-app
+TOMCAT_PATH=/var/lib/tomcat9
 
 if [ ! -d $APP_DIR ]; then
     mkdir -p $APP_DIR
@@ -18,11 +18,12 @@ cd $APP_DIR
 chmod +x gradlew
 ./gradlew build
 
-# remove the old ROOT app 
-rm -rf "$TOMCAT_PATH/webapps/ROOT*"
+echo "Removing old app from Tomcat..."
+rm -rf $TOMCAT_PATH/webapps/ROOT
+rm -rf $TOMCAT_PATH/webapps/ROOT.war
 
-# copy the new build to Tomcat webapps dir
-cp "$APP_DIR/build/libs/class_schedule.war" "$TOMCAT_PATH/webapps/ROOT.war"
+echo "Copying new build..."
+cp $APP_DIR/build/libs/class_schedule.war $TOMCAT_PATH/webapps/ROOT.war
 
 systemctl start tomcat9
 systemctl enable tomcat9
