@@ -46,7 +46,7 @@ systemctl start tomcat9
 systemctl enable tomcat9
 
 # change react_api_base_url to backend address
-find /opt/java-app/frontend -type f -name ".env" -exec sed -i "s/REACT_APP_API_BASE_URL=.*/REACT_APP_API_BASE_URL=$BACKEND_ADDRESS" {} +
+find /opt/java-app/frontend -type f -name ".env" -exec sed -i "s|REACT_APP_API_BASE_URL=.*|REACT_APP_API_BASE_URL=$BACKEND_ADDRESS|" {} +
 
 # start the frontend
 cd frontend/
