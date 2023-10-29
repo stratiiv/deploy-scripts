@@ -1,13 +1,14 @@
-# load environment variables from .env file
-if [ -f .env ]; then
-    source .env
-else
-    echo "Error: .env file not found."
-    exit 1
-fi
-
 PG_HOME="/var/lib/postgresql"
 DUMP_PATH="$PG_HOME/dumps"
+ENV_FILE=".env"
+
+# load shell variables
+if [ -f $ENV_FILE ]; then
+    source $ENV_FILE
+else
+    echo "Error: $ENV_FILE file not found."
+    exit 1
+fi
 
 if [ ! -d $DUMP_PATH ]; then
     mkdir -p $DUMP_PATH
