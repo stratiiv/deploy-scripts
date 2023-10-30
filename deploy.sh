@@ -24,6 +24,10 @@ if [ "$1" == "--refactor" ]; then
     echo "Changing .properties credentials to environment variables..."
     find $APP_DIR -type f -name "hibernate.properties" -exec sed -i "s/hibernate.connection.password=.*/hibernate.connection.password=\${PG_PASSWORD}/" {} +
     find $APP_DIR -type f -name "hibernatetest.properties" -exec sed -i "s/hibernate.connection.password=.*/hibernate.connection.password=\${PG_PASSWORD}/" {} +
+    # add env var to Tomcat
+    echo "Creating setenv.sh for Tomcat..."
+    echo "export JAVA_OPTS=\"-DPG_PASSWORD=$PG_PASSWORD\"" > /usr/share/tomcat9/bin/setenv.sh
+    chmod 755 /usr/share/tomcat9/bin/setenv.sh
 fi
 
 if systemctl is-active --quiet tomcat9; then
