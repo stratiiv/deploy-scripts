@@ -5,9 +5,9 @@ ENV_FILE=".env"
 
 # export environment variables
 if [ -f "$ENV_FILE" ]; then
-    while IFS= read -r line; do
-        export "$line"
-    done < "$ENV_FILE"
+    set -o allexport
+    source .env
+    set +o allexport
     echo "Exported environment variables from $ENV_FILE"
 else
     echo "Error: $ENV_FILE not found."
