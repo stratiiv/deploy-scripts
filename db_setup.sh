@@ -31,6 +31,7 @@ for service in "${services[@]}"; do
     check_error "Failed to start and enable $service."
 done
 
+# setting up PostgreSQL DB
 echo "Creating PostgreSQL user, databases, and .pgpass file..."
 sudo -u postgres psql -c "CREATE USER $PG_USER WITH PASSWORD '$PG_PASSWORD'"
 sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $PG_USER"
@@ -42,6 +43,7 @@ echo "Copying dump file..."
 cp "$DUMP_FILE" "$DUMP_PATH/$DUMP_FILE"
 check_error "Failed to copy the dump file."
 
+# dump restore
 echo "Restoring the database from the dump file..."
 sudo -u postgres psql -U "$PG_USER" -h "$DB_HOST" -d "$DB_NAME" -f "$DUMP_PATH/$DUMP_FILE"
 check_error "Failed to restore the database."
