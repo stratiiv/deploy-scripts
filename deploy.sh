@@ -22,8 +22,10 @@ git clone $CODE_REPO $APP_DIR
 
 if [ "$1" == "--refactor" ]; then
     echo "Changing .properties credentials to environment variables..."
-    find $APP_DIR -type f -name "hibernate.properties" -exec sed -i "s/hibernate.connection.password=.*/hibernate.connection.password=\${PG_PASSWORD}/" {} +
-    find $APP_DIR -type f -name "hibernatetest.properties" -exec sed -i "s/hibernate.connection.password=.*/hibernate.connection.password=\${PG_PASSWORD}/" {} +
+    find $APP_DIR -type f -name "hibernate.properties" -exec \ 
+        sed -i "s/hibernate.connection.password=.*/hibernate.connection.password=\${PG_PASSWORD}/" {} +
+    find $APP_DIR -type f -name "hibernatetest.properties" -exec \ 
+        sed -i "s/hibernate.connection.password=.*/hibernate.connection.password=\${PG_PASSWORD}/" {} +
     # add env var to Tomcat
     echo "Creating setenv.sh for Tomcat..."
     echo "export JAVA_OPTS=\"-DPG_PASSWORD=\\\"$PG_PASSWORD\\\"\"" > /usr/share/tomcat9/bin/setenv.sh
@@ -53,7 +55,8 @@ systemctl start tomcat9
 systemctl enable tomcat9
 
 # change react_api_base_url to backend address
-find /opt/java-app/frontend -type f -name ".env" -exec sed -i "s|REACT_APP_API_BASE_URL=.*|REACT_APP_API_BASE_URL=$BACKEND_ADDRESS|" {} +
+find /opt/java-app/frontend -type f -name ".env" -exec \ 
+    sed -i "s|REACT_APP_API_BASE_URL=.*|REACT_APP_API_BASE_URL=$BACKEND_ADDRESS|" {} +
 
 # start the frontend
 echo "Starting frontend server..."

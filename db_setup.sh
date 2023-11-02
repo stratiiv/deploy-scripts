@@ -36,7 +36,8 @@ echo "Creating PostgreSQL user, databases, and .pgpass file..."
 sudo -u postgres psql -c "CREATE USER $PG_USER WITH PASSWORD '$PG_PASSWORD'"
 sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $PG_USER"
 sudo -u postgres psql -c "CREATE DATABASE ${DB_NAME}_test WITH OWNER $PG_USER" # db for tests
-echo "$DB_HOST:$DB_PORT:$DB_NAME:$PG_USER:$PG_PASSWORD" | sudo -u postgres bash -c 'cat > /var/lib/postgresql/.pgpass'
+echo "$DB_HOST:$DB_PORT:$DB_NAME:$PG_USER:$PG_PASSWORD" | \
+    sudo -u postgres bash -c 'cat > /var/lib/postgresql/.pgpass'
 chmod 0600 $PG_HOME/.pgpass
 
 echo "Copying dump file..."
